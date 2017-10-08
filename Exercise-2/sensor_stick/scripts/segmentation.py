@@ -115,7 +115,7 @@ def pcl_callback(pcl_msg):
     # TODO: Publish ROS messages
     pcl_objects_pub.publish(ros_cloud_objects)
     pcl_table_pub.publish(ros_cloud_table)
-    plc_cluster_pub.publish(ros_cluster_cloud)
+    pcl_cluster_pub.publish(ros_cluster_cloud)
 
 
 if __name__ == '__main__':
