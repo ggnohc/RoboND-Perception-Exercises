@@ -57,25 +57,28 @@ def pcl_callback(pcl_msg):
     max_distance = 0.01
     seg.set_distance_threshold(max_distance)
 
+    # ****This is so-called Extracting Indices****
     # TODO: Extract inliers and outliers
     # Call the segment function to obtain set of inlier indices and model coefficients
     inliers, coefficients = seg.segment()
 
     # Extract inliers
-    extracted_inliers = pcl_data_filtered.extract(inliers, negative=False)
-    filename = 'extracted_inliers.pcd'
-    pcl.save(extracted_inliers, filename)
+    cloud_table = pcl_data_filtered.extract(inliers, negative=False)
+    filename = 'cloud_table.pcd'
+    pcl.save(cloud_table, filename)
 
     # Extract outliers
-    extracted_outliers = pcl_data_filtered.extract(inliers, negative=True)
-    filename = 'extracted_outliers.pcd'
-    pcl.save(extracted_outliers, filename)
+    cloud_objects = pcl_data_filtered.extract(inliers, negative=True)
+    filename = 'cloud_objects.pcd'
+    pcl.save(cloud_objects, filename)
 
-    # TODO: Euclidean Clustering
+    # TODO: Euclidean Clustering, ****DBSCAN Algorithm****
 
     # TODO: Create Cluster-Mask Point Cloud to visualize each cluster separately
 
     # TODO: Convert PCL data to ROS messages
+    ros_cloud_objects = pcl_to_ros(cloud_objects)
+    ros_cloud_table = pcl_to_ros(cloud_table)
 
     # TODO: Publish ROS messages
     pcl_objects_pub.publish(pcl_msg)
