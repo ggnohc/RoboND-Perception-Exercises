@@ -73,6 +73,22 @@ def pcl_callback(pcl_msg):
     pcl.save(cloud_objects, filename)
 
     # TODO: Euclidean Clustering, ****DBSCAN Algorithm****
+    white_cloud = XYZRGB_to_XYZ(cloud_objects)
+    tree = white_cloud.make_kdtree()
+
+    # Create a cluster extraction object
+    ec = white_cloud.make_EuclideanClusterExtraction()
+    # Set tolerances for distance threshold
+    # as well as minimum and maximum cluster size (in points)
+    # NOTE: These are poor choices of clustering parameters
+    # Your task is to experiment and find values that work for segmenting objects.
+    ec.set_ClusterTolerance(0.001)
+    ec.set_MinClusterSize(10)
+    ec.set_MaxClusterSize(250)
+    # Search the k-d tree for clusters
+    ec.set_SearchMethod(tree)
+    # Extract indices for each of the discovered clusters
+    cluster_indices = ec.Extract()
 
     # TODO: Create Cluster-Mask Point Cloud to visualize each cluster separately
 
