@@ -139,17 +139,19 @@ def pcl_callback(pcl_msg):
 
     for index, pts_list in enumerate(cluster_indices):
         # Grab the points for the cluster
+        print ("index: {}; pts_list: {}".format(index, pts_list))
         pcl_cluster = cloud_objects.extract(pts_list)
         # TODO: convert the cluster from pcl to ROS using helper function
-        ros_pcl_cluster = pcl_to_ros(pcl_cluster)
+        ros_cluster = pcl_to_ros(pcl_cluster)
 
         # Extract histogram features
         # TODO: complete this step just as is covered in capture_features.py
-        chists = compute_color_histograms(sample_cloud, using_hsv=True)  #GC: Use HSV
-        normals = get_normals(sample_cloud)
+        chists = compute_color_histograms(ros_cluster, using_hsv=True)  #GC: Use HSV
+        normals = get_normals(ros_cluster)
         nhists = compute_normal_histograms(normals)
         feature = np.concatenate((chists, nhists))
-        labeled_features.append([feature, model_name])
+        # labeled_features.append([feature, model_name])
+        detected_objects_labels.append([feature, index])
 
         # Compute the associated feature vector
 
@@ -189,9 +191,9 @@ if __name__ == '__main__':
     # Call them object_markers_pub and detected_objects_pub
     # Have them publish to "/object_markers" and "/detected_objects" with
     # Message Types "Marker" and "DetectedObjectsArray" , respectively
-    # pcl_objects_pub = rospy.Publisher("/pcl_objects", PointCloud2, queue_size=1)
-    # pcl_table_pub = rospy.Publisher("/pcl_table", PointCloud2, queue_size=1)
-    # pcl_cluster_pub = rospy.Publisher("/pcl_cluster", PointCloud2, queue_size=1)
+    pcl_objects_pub = rospy.Publisher("/pcl_objects", PointCloud2, queue_size=1)
+    pcl_table_pub = rospy.Publisher("/pcl_table", PointCloud2, queue_size=1)
+    pcl_cluster_pub = rospy.Publisher("/pcl_cluster", PointCloud2, queue_size=1)
     object_markers_pub = rospy.Publisher("/object_markers", Marker, queue_size=1)
     detected_objects_pub = rospy.Publisher("/detected_objects", DetectedObjectsArray, queue_size=1)
 
