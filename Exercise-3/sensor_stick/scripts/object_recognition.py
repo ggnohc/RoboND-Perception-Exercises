@@ -139,7 +139,7 @@ def pcl_callback(pcl_msg):
 
     for index, pts_list in enumerate(cluster_indices):
         # Grab the points for the cluster
-        print ("index: {}; pts_list: {}".format(index, pts_list))
+        # print ("index: {}; pts_list: {}".format(index, pts_list))
         pcl_cluster = cloud_objects.extract(pts_list)
         # TODO: convert the cluster from pcl to ROS using helper function
         ros_cluster = pcl_to_ros(pcl_cluster)
@@ -151,7 +151,7 @@ def pcl_callback(pcl_msg):
         nhists = compute_normal_histograms(normals)
         feature = np.concatenate((chists, nhists))
         # labeled_features.append([feature, model_name])
-        detected_objects_labels.append([feature, index])
+        # detected_objects_labels.append([feature, index])  #GC do we need this line?
 
         # Compute the associated feature vector
 
