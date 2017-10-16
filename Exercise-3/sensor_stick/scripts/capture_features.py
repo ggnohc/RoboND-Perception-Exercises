@@ -31,10 +31,15 @@ if __name__ == '__main__':
     #    'hammer',
     #    'plastic_cup',
     #    'soda_can']
-    models = [\
+   models = [\
        'biscuits',
        'soap',
-       'soap2']
+       'soap2',
+       'book',
+       'glue',
+       'sticky_notes',
+       'snack',
+       'eraser']
 
     # Disable gravity and delete the ground plane
     initial_setup()
