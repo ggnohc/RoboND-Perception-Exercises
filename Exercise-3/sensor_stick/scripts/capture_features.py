@@ -38,7 +38,7 @@ if __name__ == '__main__':
        'book',
        'glue',
        'sticky_notes',
-       'snack',
+       'snacks',
        'eraser']
 
     # Disable gravity and delete the ground plane
